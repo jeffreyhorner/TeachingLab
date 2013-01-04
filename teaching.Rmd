@@ -1,20 +1,19 @@
 # Teaching Lab Demo
 
-This is a minimal example of using **knitr** to produce an _HTML_ page from _Markdown_.
+This tab demonstrates how to integrate the output of knitted Rmd files into your Shiny app. The server.R pseudo-code is:
+```{r server, eval=FALSE}
+   # reactiveRmd returns a function that will return the output of knit2html
+   # on the Rmd file. Additionally it will only re-run knit2html if the Rmd file
+   # has changed.
+   teachingRmd <- reactiveRmd('teaching.Rmd',input)
 
-## R code chunks
-
-```{r setup}
-# set global chunk options: images will be 7x5 inches
-opts_chunk$set(fig.width=7, fig.height=5)
-```
-
-Now we write some code chunks in this markdown file:
-
-```{r computing}
-x <- 1+1 # a simple calculator
-set.seed(123)
-rnorm(5)  # boring random numbers
+   output$teaching <- reactive(function(){
+      # Only call our reactive Rmd function when our tab is visible
+      if (input$visibleTab=='Teaching')
+         teachingRmd() # returns the HTML
+      else
+         NULL
+   })
 ```
 
 We can also produce plots:

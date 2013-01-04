@@ -1,6 +1,8 @@
 library(shiny)
 library(Hmisc)
 
+source('shinyExtras.R')
+
 shinyServer(function(input, output) {
    output$tab1 <- reactiveText(function(){
       'Tab 1 Output'
