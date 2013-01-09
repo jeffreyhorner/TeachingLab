@@ -1,5 +1,6 @@
 library(shiny)
 library(Hmisc)
+options(shiny.trace=TRUE)
 
 source('shinyExtras.R')
 
@@ -25,8 +26,20 @@ shinyServer(function(input, output) {
          NULL
    })
 
-   output$catMu <- reactive(function(){ input$mu })
-   output$catSigmaSqr <- reactive(function(){ input$sigmaSqr })
+   output$catMu <- reactive(function(){ 
+      if (is.null(input$mu)){
+         input$mu <- 0
+      } else {
+         input$mu
+      }
+   })
+   output$catSigmaSqr <- reactive(function(){ 
+      if (is.null(input$sigmaSqr)){
+         input$sigmaSqr <- 1
+      } else {
+         input$sigamSqr
+      }
+   })
    output$NormalDistPlot <- reactivePlot(function(){
     x <- seq(-5,5,0.1)
     par(mar=c(2,2,0,0))
