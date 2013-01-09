@@ -7,12 +7,12 @@ shinyUI(pageWithSidebar(
    customHeaderPanel("Application Title Here"),
 
    sidebarPanel(
-      helpText("Inputs Here")
+      helpText("Stuff Here")
    ),
 
    mainPanel(
       tabsetPanel(
-         tabPanel("Teaching",htmlOutput('teaching')),
+         tabPanel("NormalDist",htmlOutput('teaching')),
          tabPanel("Tab1",verbatimTextOutput('tab1')),
          tabPanel("Tab2",verbatimTextOutput('tab2')),
          id='visibleTab'

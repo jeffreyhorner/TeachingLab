@@ -1,6 +1,11 @@
+library(brew)
 library(knitr)
 library(markdown)
-options(markdown.HTML.options=c('fragment_only',markdownHTMLOptions(TRUE)))
+options(markdown.HTML.options=c('fragment_only','base64_images'))
+
+spanOutput <- function(id){
+  paste('<span id="',id,'" class="shiny-text-output shiny-bound-output"></span>',sep='')
+}
 
 customHeaderPanel <- function(title,windowTitle=title){
     tagList(
@@ -19,18 +24,18 @@ customHeaderPanel <- function(title,windowTitle=title){
     )
 }
 
+# Reactive on file content change, not the input values.
 reactiveRmd <- function(file,input){
-   forceMathJax <- tags$script('MathJax.Hub.Queue(["Typeset",MathJax.Hub]);')
+   forceMathJax <- tags$script("MathJax.Hub.Queue([\"Typeset\",MathJax.Hub]);$('pre code').each(function(i, e) {hljs.highlightBlock(e)});")
    fileMTIME <- file.info(file)$mtime
-   knit2html(file)
-   htmlContent <- paste(readLines(sub('.Rmd','.html',file)),forceMathJax,collapse="\n",sep="\n")
+   brew(file,output=textConnection("brewOutput","w"),envir=parent.frame())
+   htmlContent <- paste(try(knit2html(text=brewOutput)),forceMathJax,sep="\n")
    function(){
       newMTIME <- file.info(file)$mtime
       if (newMTIME > fileMTIME){
-         knit2html(file)
-         paste(readLines(sub('.Rmd','.html',file)),forceMathJax,collapse="\n",sep="\n")
          fileMTIME <<- newMTIME
-         htmlContent <<- paste(readLines(sub('.Rmd','.html',file)),forceMathJax,collapse="\n",sep="\n")
+         brew(file,output=textConnection("brewOutput","w"))
+         htmlContent <<- paste(try(knit2html(text=brewOutput)),forceMathJax,sep="\n")
       }
       htmlContent
    }

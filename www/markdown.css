@@ -42,6 +42,7 @@ pre {
    max-width: 95%;
    border: 1px solid #ccc;
    white-space: pre-wrap;
+   padding: 0;
 }
 
 pre code {

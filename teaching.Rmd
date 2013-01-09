@@ -1,57 +1,20 @@
-# Teaching Lab Demo
+# Normal Distribution
 
-This tab demonstrates how to integrate the output of knitted Rmd files into your Shiny app. The server.R pseudo-code is:
-```{r server, eval=FALSE}
-   # reactiveRmd returns a function that will return the output of knit2html
-   # on the Rmd file. Additionally it will only re-run knit2html if the Rmd file
-   # has changed.
-   teachingRmd <- reactiveRmd('teaching.Rmd',input)
+The normal (or Gaussian) distribution is a continuous probability
+distribution, defined on the entire real line. It has a bell-shaped
+probability density function, known as the Gaussian function or informally
+as the bell curve:
 
-   output$teaching <- reactive(function(){
-      # Only call our reactive Rmd function when our tab is visible
-      if (input$visibleTab=='Teaching')
-         teachingRmd() # returns the HTML
-      else
-         NULL
-   })
-```
+$$
+f(x;\mu, \sigma^2) = \frac{1}{\sigma \sqrt{2 \pi}} 
+ e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2}
+$$
 
-We can also produce plots:
+With mean $\mu$ = <%=spanOutput("catMu")%> and variance $\sigma^2$ = 
+<%=spanOutput("catSigmaSqr")%> the function looks like:
 
-```{r graphics}
-par(mar = c(4, 4, .1, .1))
-with(mtcars, {
-  plot(mpg~hp, pch=20, col='darkgray')
-  lines(lowess(hp, mpg))
-})
-```
 
-## Inline code
+<%=as.character(plotOutput('NormalDistPlot',width="100%",height="400px"))%>
 
-Inline R code is also supported, e.g. the value of `x` is `r x`, and 2 &times; &pi;
-= `r 2*pi`.
-
-## Math
-
-LaTeX math as usual: $f(\alpha, \beta) \propto x^{\alpha-1}(1-x)^{\beta-1}$.
-
-## Misc
-
-You can indent code chunks so they can nest within other environments such as lists.
-
-1. the area of a circle with radius x
-    ```{r foo}
-    pi * x^2
-    ```
-2. OK, that is great
-
-To compile me, use
-
-```{r compile, eval=FALSE}
-library(knitr)
-knit('knitr-minimal.Rmd')
-```
-
-## Conclusion
-
-Markdown is super easy to write. Go to **knitr** [homepage](http://yihui.name/knitr) for details.
+<%=as.character(sliderInput("mu","$\\mu$", value=0, min=-5, max=5,step=.1))%>
+<%=as.character(sliderInput("sigmaSqr","$\\sigma^2$",value=1,min=0.1,max=5,step=.1))%>

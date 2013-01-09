@@ -19,10 +19,19 @@ shinyServer(function(input, output) {
 
    output$teaching <- reactive(function(){
       # Only call our reactive Rmd function when our tab is visible
-      if (input$visibleTab=='Teaching')
+      if (input$visibleTab=='NormalDist')
          teachingRmd() # returns the HTML
       else
          NULL
    })
 
+   output$catMu <- reactive(function(){ input$mu })
+   output$catSigmaSqr <- reactive(function(){ input$sigmaSqr })
+   output$NormalDistPlot <- reactivePlot(function(){
+    x <- seq(-5,5,0.1)
+    par(mar=c(2,2,0,0))
+    par(yaxp=c(0,1,10))
+    plot(c(-5,5),c(0,1),type='n',xlab=NA,ylab=NA,bty='n')
+    lines(x,dnorm(x,mean=input$mu,sd=sqrt(input$sigmaSqr)),type='l')
+   },400,400)
 })
