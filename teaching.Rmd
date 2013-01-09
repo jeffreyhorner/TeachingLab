@@ -10,11 +10,23 @@ f(x;\mu, \sigma^2) = \frac{1}{\sigma \sqrt{2 \pi}}
  e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2}
 $$
 
+
 With mean $\mu$ = <%=spanOutput("catMu")%> and variance $\sigma^2$ = 
 <%=spanOutput("catSigmaSqr")%> the function looks like:
-
 
 <%=as.character(plotOutput('NormalDistPlot',width="100%",height="400px"))%>
 
 <%=as.character(sliderInput("mu","$\\mu$", value=0, min=-5, max=5,step=.1))%>
 <%=as.character(sliderInput("sigmaSqr","$\\sigma^2$",value=1,min=0.1,max=5,step=.1))%>
+
+# Example R Code to Produce Plot
+
+```{r eval=FALSE}
+  x <- seq(-5,5,0.1)
+  mu <- 1
+  sigmaSqr <- 1
+  par(mar=c(2,2,0,0))
+  par(yaxp=c(0,1,10))
+  plot(c(-5,5),c(0,1),type='n',xlab=NA,ylab=NA,bty='n')
+  lines(x,dnorm(x,mean=mu,sd=sqrt(sigmaSqr)),type='l')
+```
