@@ -1,5 +1,3 @@
-# Normal Distribution
-
 The normal (or Gaussian) distribution is a continuous probability
 distribution, defined on the entire real line. It has a bell-shaped
 probability density function, known as the Gaussian function or informally
@@ -16,8 +14,8 @@ With mean $\mu$ = <%=spanOutput("catMu")%> and variance $\sigma^2$ =
 
 <%=as.character(plotOutput('NormalDistPlot',width="100%",height="400px"))%>
 
-<%=as.character(sliderInput("mu","$\\mu$", value=0, min=-5, max=5,step=.1))%>
-<%=as.character(sliderInput("sigmaSqr","$\\sigma^2$",value=1,min=0.1,max=5,step=.1))%>
+<%=as.character(sliderInput("mu","\\(\\mu\\)", value=0, min=-5, max=5,step=.1))%>
+<%=as.character(sliderInput("sigmaSqr","\\(\\sigma^2\\)",value=1,min=0.1,max=5,step=.1))%>
 
 # Example R Code to Produce Plot
 

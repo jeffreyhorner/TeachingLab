@@ -1,21 +1,25 @@
 library(shiny)
 source('shinyExtras.R')
 
-shinyUI(pageWithSidebar(
+#shinyUI(pageWithSidebar(
+#
+#   customHeaderPanel("Normal Distribution"),
+#
+#   sidebarPanel(),
+#
+#   mainPanel(
+#      tabsetPanel(
+#         tabPanel("NormalDist",htmlOutput('teaching')),
+#         tabPanel("Tab1",verbatimTextOutput('tab1')),
+#         tabPanel("Tab2",verbatimTextOutput('tab2')),
+#         id='visibleTab'
+#      )
+#   )
+#))
 
-   # Application title
-   customHeaderPanel("Application Title Here"),
+shinyUI(basicPage(
+  customHeaderPanel("Normal Distribution"),
+  htmlOutput('teaching')
+  )
+)
 
-   sidebarPanel(
-      helpText("Stuff Here")
-   ),
-
-   mainPanel(
-      tabsetPanel(
-         tabPanel("NormalDist",htmlOutput('teaching')),
-         tabPanel("Tab1",verbatimTextOutput('tab1')),
-         tabPanel("Tab2",verbatimTextOutput('tab2')),
-         id='visibleTab'
-      )
-   )
-))

@@ -20,10 +20,7 @@ shinyServer(function(input, output) {
 
   output$teaching <- reactive(function(){
     # Only call our reactive Rmd function when our tab is visible
-    if (input$visibleTab=='NormalDist')
       teachingRmd() # returns the HTML
-    else
-      NULL
   })
 
   output$catMu <- reactive(function(){ input$mu })
