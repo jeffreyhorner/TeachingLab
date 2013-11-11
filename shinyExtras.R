@@ -28,13 +28,15 @@ customHeaderPanel <- function(title,windowTitle=title){
 reactiveRmd <- function(file,input){
    forceMathJax <- tags$script("MathJax.Hub.Queue([\"Typeset\",MathJax.Hub]);$('pre code').each(function(i, e) {hljs.highlightBlock(e)});")
    fileMTIME <- file.info(file)$mtime
-   brew(file,output=textConnection("brewOutput","w"),envir=parent.frame())
+   brewOutput <- character()
+   brew(file,output=textConnection("brewOutput","w",local=TRUE),envir=parent.frame())
    htmlContent <- paste(try(knit2html(text=brewOutput)),forceMathJax,sep="\n")
    function(){
       newMTIME <- file.info(file)$mtime
       if (newMTIME > fileMTIME){
          fileMTIME <<- newMTIME
-         brew(file,output=textConnection("brewOutput","w"))
+         brewOutput <- character()
+         brew(file,output=textConnection("brewOutput","w",local=TRUE))
          htmlContent <<- paste(try(knit2html(text=brewOutput)),forceMathJax,sep="\n")
       }
       htmlContent
